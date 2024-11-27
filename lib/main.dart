@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Hospital App',
       theme: ThemeData.dark(),
-      home: const LoginScreen(),
+      home: LoginScreen(),
     );
   }
 }
