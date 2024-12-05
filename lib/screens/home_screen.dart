@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hospital/constants.dart';
+import 'package:hospital/screens/blood_bank_screen.dart';
 import 'package:hospital/screens/edit_profile_screen.dart';
 import 'package:hospital/screens/emergency_screen.dart';
+import 'package:hospital/screens/laboratory_screen.dart';
+import 'package:hospital/screens/sections_screen.dart';
+import 'package:hospital/screens/technical_support_screen.dart';
 import 'package:hospital/views/home_screen_view.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -26,6 +31,13 @@ class _HomeScreenState extends State<HomeScreen> {
       index == 1 ? appBarTittle = "تعديل بيانات الشخصية" : "الصفحــة الرئيسية";
       _selectedIndex = index;
     });
+  }
+
+  Future<void> _launchUrl(String url) async {
+    final Uri _url = Uri.parse(url);
+    if (!await launchUrl(_url)) {
+      throw Exception('Could not launch $_url');
+    }
   }
 
   @override
@@ -87,7 +99,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: labelStyle,
                 ),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const SectionsScreen();
+                  }));
                 },
               ),
               ListTile(
@@ -101,7 +115,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: labelStyle,
                 ),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const LaboratoryScreen();
+                  }));
                 },
               ),
               ListTile(
@@ -114,7 +130,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: labelStyle,
                 ),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const BloodBankScreen();
+                  }));
                 },
               ),
               ListTile(
@@ -127,7 +145,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: labelStyle,
                 ),
                 onTap: () {
-                  Navigator.pop(context);
+                  _launchUrl(
+                      "https://www.google.com/maps/dir//University+Teaching+Hospital+%D9%85%D8%B3%D8%AA%D8%B4%D9%81%D9%89+%D8%A7%D9%84%D8%B7%D9%84%D8%A8%D9%87+Al+Doctor+Naghatti+Tanta+Qism+2,+First+Tanta,+Gharbia+Governorate+6624033%E2%80%AD%E2%80%AD/@30.8021178,30.9943836,17z/data=!4m8!4m7!1m0!1m5!1m1!1s0x14f7c978bb69b90f:0xddae0c8dd3497047!2m2!1d30.9943836!2d30.8021178?entry=ttu&g_ep=EgoyMDI0MTIwMy4wIKXMDSoASAFQAw%3D%3D");
                 },
               ),
               ListTile(
@@ -140,7 +159,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: labelStyle,
                 ),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const TechnicalSupportScreen();
+                  }));
                 },
               ),
               ListTile(
