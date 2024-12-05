@@ -1,70 +1,132 @@
 import 'package:flutter/material.dart';
 import 'package:hospital/constants.dart';
+import 'package:hospital/models/news_model.dart';
 
 class NewsWidget extends StatelessWidget {
   const NewsWidget({
+    required this.newsModel,
     super.key,
   });
-
+  final NewsModel newsModel;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
-        padding: const EdgeInsets.all(8),
+        // padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: const Color.fromARGB(255, 120, 119, 119),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              const Icon(
-                Icons.arrow_back_ios,
-                size: 20,
-                color: Color.fromARGB(255, 209, 209, 209),
+        child: Column(
+          children: [
+            Container(
+              height: 150,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: NetworkImage(newsModel.image),
+                ),
               ),
-              Column(
-                children: [
-                  SizedBox(
-                    height: 45,
-                    width: 175,
-                    child: Text(
-                        textAlign: TextAlign.right,
-                        maxLines: 2,
-                        style: normalStyle,
-                        overflow: TextOverflow.ellipsis,
-                        " إدارة مستشفيات جامعة طنطا والسادة أعضاء هيئة التدريس ومعاونيهم والسادة العاملين وهيئة التمريض، بخالص التهاني القلبية"),
-                  ),
-                  const SizedBox(
-                    height: 45,
-                    width: 175,
-                    child: Text(
-                        style: TextStyle(
-                          fontFamily: "NotoKufiArabic",
-                          fontSize: 14,
-                          color: Color.fromARGB(179, 255, 255, 255),
-                        ),
-                        textAlign: TextAlign.right,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        " لتعيين سيادته مشرفاً عاماً على مستشفيات جامعة طنطا."),
-                  ),
-                ],
+            ),
+            SizedBox(
+              child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: Text(
+                    textAlign: TextAlign.right,
+                    maxLines: 1,
+                    style: normalStyle,
+                    overflow: TextOverflow.ellipsis,
+                    newsModel.tittle),
               ),
-              Container(
-                height: 90,
-                width: 140,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  image: const DecorationImage(
-                    fit: BoxFit.fill,
-                    image: NetworkImage(
-                        "https://hospital2.tanta.edu.eg/images/photo.jpg"),
+            ),
+            SizedBox(
+              height: 45,
+              child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: Text(
+                    style: const TextStyle(
+                      fontFamily: "NotoKufiArabic",
+                      fontSize: 14,
+                      color: Color.fromARGB(179, 255, 255, 255),
+                    ),
+                    textAlign: TextAlign.right,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    newsModel.subtittle),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return NewsView(
+                    newsModel: newsModel,
+                  );
+                }));
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: Text(
+                    textAlign: TextAlign.right,
+                    maxLines: 1,
+                    style: normalStyle,
+                    overflow: TextOverflow.ellipsis,
+                    "مشاهدة الخبر 👆",
                   ),
                 ),
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class NewsView extends StatelessWidget {
+  const NewsView({
+    super.key,
+    required this.newsModel,
+  });
+  final NewsModel newsModel;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                height: MediaQuery.sizeOf(context).height / 3,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: NetworkImage(newsModel.image),
+                  ),
+                ),
+              ),
+              Text(
+                textAlign: TextAlign.left,
+                newsModel.date,
+                style: newsStyle,
+              ),
+              Text(
+                newsModel.tittle,
+                textAlign: TextAlign.center,
+                style: specialStyle,
+              ),
+              Text(
+                textAlign: TextAlign.right,
+                newsModel.subtittle,
+                style: newsStyle,
+              )
             ],
           ),
         ),

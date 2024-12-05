@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hospital/constants.dart';
 import 'package:hospital/screens/edit_profile_screen.dart';
+import 'package:hospital/screens/emergency_screen.dart';
 import 'package:hospital/views/home_screen_view.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   String appBarTittle = "الصفحــة الرئيسية";
   final List<Widget> _pages = [
-    const HomeScreenView(),
+    HomeScreenView(),
     const EditProfileScreen(),
   ];
 
@@ -62,15 +63,18 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               ListTile(
                 leading: const Icon(
-                    size: 30,
-                    color: Color.fromARGB(255, 165, 36, 27),
-                    Icons.emergency_share),
+                  size: 30,
+                  color: Color.fromARGB(255, 165, 36, 27),
+                  Icons.emergency_share,
+                ),
                 title: Text(
                   'مستشفى الطـوارئ ',
                   style: labelStyle,
                 ),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const EmergencyScreen();
+                  }));
                 },
               ),
               ListTile(

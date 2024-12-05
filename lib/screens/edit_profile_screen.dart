@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hospital/constants.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -12,6 +15,33 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController nameController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey();
   TextEditingController phoneController = TextEditingController();
+  File? _image;
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
+  void _viewImage() {
+    if (_image != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ImageViewPage(image: _image!),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("No image uploaded")),
+      );
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -115,6 +145,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
             ),
             Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: _pickImage,
+                child: Text(
+                  'تحميل البطاقة الشخصية',
+                  style: normalStyle,
+                ),
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: GestureDetector(
                 onTap: () {
@@ -139,6 +179,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ImageViewPage extends StatelessWidget {
+  final File image;
+
+  const ImageViewPage({super.key, required this.image});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('View Image'),
+      ),
+      body: Center(
+        child: Image.file(image),
       ),
     );
   }
