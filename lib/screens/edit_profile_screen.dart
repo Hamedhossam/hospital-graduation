@@ -27,20 +27,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
   }
 
-  void _viewImage() {
-    if (_image != null) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ImageViewPage(image: _image!),
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("No image uploaded")),
-      );
-    }
-  }
+  // void _viewImage() {
+  //   if (_image != null) {
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (context) => ImageViewPage(image: _image!),
+  //       ),
+  //     );
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(content: Text("No image uploaded")),
+  //     );
+  //   }
+  // }
 
   @override
   void initState() {
@@ -154,6 +154,27 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
               ),
             ),
+            _image != null
+                ? Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ImageViewPage(image: _image!),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: MediaQuery.sizeOf(context).height / 5,
+                      width: MediaQuery.sizeOf(context).height / 5,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "لا يوجد صورة",
+                          style: normalStyle,
+                        ),
+                      ),
+                    ),
+                  ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: GestureDetector(
@@ -191,13 +212,19 @@ class ImageViewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('View Image'),
-      ),
-      body: Center(
-        child: Image.file(image),
-      ),
+    return Column(
+      children: [
+        Container(
+          height: MediaQuery.sizeOf(context).height / 5,
+          width: MediaQuery.sizeOf(context).height / 5,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              image:
+                  DecorationImage(image: FileImage(image), fit: BoxFit.fill)),
+        ),
+        Text('..البطاقة قيد المراجعة',
+            style: normalStyle?.copyWith(color: Colors.grey)),
+      ],
     );
   }
 }

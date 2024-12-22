@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+String numberOfPatiant = 'لا يوجد';
+String numberOfNowPatiant = '15';
 TextStyle? labelStyle = const TextStyle(
   fontFamily: "NotoKufiArabic",
   fontSize: 18,

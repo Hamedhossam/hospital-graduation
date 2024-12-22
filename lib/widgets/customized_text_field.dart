@@ -28,6 +28,10 @@ class CustomizedTextField extends StatelessWidget {
         textAlign: TextAlign.left,
         keyboardType: TextInputType.phone,
         decoration: InputDecoration(
+          errorStyle: normalStyle?.copyWith(
+            color: Colors.red,
+            fontWeight: FontWeight.bold,
+          ),
           suffixIcon: const Icon(Icons.phone_android),
           hintText: hint,
           hintStyle: normalStyle,

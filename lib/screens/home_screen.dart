@@ -18,11 +18,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
   String appBarTittle = "الصفحــة الرئيسية";
   final List<Widget> _pages = [
-    HomeScreenView(),
     const EditProfileScreen(),
+    HomeScreenView(),
   ];
 
   void _onItemTapped(int index) {
@@ -187,12 +187,12 @@ class _HomeScreenState extends State<HomeScreen> {
         unselectedLabelStyle: normalStyle,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'الرئيسية', // Home
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'الإعدادات', // Settings
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'الرئيسية', // Home
           ),
         ],
         currentIndex: _selectedIndex,
